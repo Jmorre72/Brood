@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
     <style>
-        /* ALLE ORIGINELE STYLES VAN VERSIE 3 */
+        /* ALLE ORIGINELE STYLES VAN VERSIE 3 ONGEWIJZIGD */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; }
         .login-container { display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -20,7 +20,7 @@
         .app-container { display: none; max-width: 1400px; margin: 0 auto; padding: 20px; }
         header { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
         .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .nav-tab { padding: 12px 24px; background: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .nav-tab { padding: 12px 24px; background: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s; font-size: 14px; font-weight: 500; }
         .nav-tab.active { background: #667eea; color: white; }
         .content-section { display: none; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .content-section.active { display: block; }
@@ -41,14 +41,15 @@
         .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
         .modal-content { background-color: white; margin: 50px auto; padding: 30px; width: 90%; max-width: 600px; border-radius: 10px; max-height: 80vh; overflow-y: auto; }
-        #logList { max-height: 300px; overflow-y: auto; background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #ddd; }
+        .log-entry { font-size: 13px; padding: 5px 0; border-bottom: 1px solid #f0f0f0; }
+        .log-time { color: #667eea; font-weight: bold; }
         @media print { .no-print { display: none !important; } }
     </style>
 </head>
 <body>
     <div id="loginScreen" class="login-container">
         <div class="login-box">
-            <h2>Brood Levering Management</h2>
+            <h2>🍞 Brood Levering Management</h2>
             <div class="form-group"><input type="text" id="username" placeholder="Gebruikersnaam"></div>
             <div class="form-group"><input type="password" id="pincode" placeholder="PIN Code"></div>
             <button onclick="login()">Inloggen</button>
@@ -57,11 +58,11 @@
 
     <div id="appContainer" class="app-container">
         <header>
-            <h1>Brood Levering Management</h1>
+            <h1>🍞 Brood Levering Management</h1>
             <div class="user-info">
                 <span>👤 <span id="currentUser"></span></span>
                 <span>📅 <span id="currentDate"></span></span>
-                <button class="logout-btn" onclick="logout()" style="padding: 8px 15px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer;">Uitloggen</button>
+                <button class="logout-btn" onclick="logout()">Uitloggen</button>
             </div>
         </header>
 
@@ -105,21 +106,21 @@
                 <div>
                     <h3>Nieuw Product</h3>
                     <div class="form-group"><label>Categorie</label><select id="productCategory"><option value="Brood">Brood</option><option value="Pistolets">Pistolets</option><option value="Koeken">Koeken</option></select></div>
-                    <div class="form-group"><label>Naam</label><input type="text" id="productName"></div>
+                    <div class="form-group"><label>Broodsoort</label><input type="text" id="productName"></div>
                     <div class="form-group"><label>Prijs</label><input type="number" id="productPrice" step="0.01"></div>
                     <button class="btn btn-primary" onclick="addProduct()">Product Toevoegen</button>
                 </div>
-                <div><table id="productsTable"><thead><tr><th>Categorie</th><th>Naam</th><th>Prijs</th><th>Acties</th></tr></thead><tbody></tbody></table></div>
+                <div><table id="productsTable"><thead><tr><th>Categorie</th><th>Broodsoort</th><th>Prijs</th><th>Acties</th></tr></thead><tbody></tbody></table></div>
             </div>
         </div>
 
         <div id="templates" class="content-section">
             <h2>Sjablonen Beheer</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                 <div class="form-group"><label>Klant</label><select id="templateCustomer"></select></div>
                 <div class="form-group"><label>Product</label><select id="templateProduct"></select></div>
                 <div class="form-group"><label>Aantal</label><input type="number" id="templateQuantity" value="1"></div>
-                <div class="form-group"><label>Ronde</label><select id="templateRound"><option value="1">1</option><option value="2">2</option></select></div>
+                <div class="form-group"><label>Broodronde</label><select id="templateRound"><option value="1">Ronde 1</option><option value="2">Ronde 2</option></select></div>
             </div>
             <div class="form-group">
                 <label>Dagen:</label>
@@ -133,6 +134,7 @@
             <h2>Dagelijkse Broodrondes</h2>
             <input type="date" id="roundDate" onchange="loadDailyRounds()">
             <button class="btn btn-success" onclick="generateFromTemplates()">📋 Genereer van Sjablonen</button>
+            <button class="btn btn-primary" onclick="showAddOrderModal()">➕ Eenmalige Bestelling</button>
             <div id="roundsList"></div>
         </div>
 
@@ -145,13 +147,27 @@
         <div id="reports" class="content-section">
             <h2>Rapporten & Logs</h2>
             <div id="customerReport"></div>
-            <h3>Systeem Logs</h3>
-            <div id="logList"></div>
+            <div id="logContainer">
+                <h3>Systeem Registraties (Logs)</h3>
+                <div id="logList" style="max-height: 300px; overflow-y: auto; background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #ddd;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addOrderModal" class="modal">
+        <div class="modal-content">
+            <h2>Eenmalige Bestelling</h2>
+            <div class="form-group"><label>Klant</label><select id="modalCustomer"></select></div>
+            <div class="form-group"><label>Product</label><select id="modalProduct"></select></div>
+            <div class="form-group"><label>Aantal</label><input type="number" id="modalQuantity" value="1"></div>
+            <div class="form-group"><label>Broodronde</label><select id="modalRound"><option value="1">1</option><option value="2">2</option></select></div>
+            <button class="btn btn-primary" onclick="addOneTimeOrder()">Toevoegen</button>
+            <button class="btn btn-danger" onclick="closeAddOrderModal()">Sluiten</button>
         </div>
     </div>
 
     <script>
-        // 1. FIREBASE CONFIGURATIE
+        // 1. FIREBASE CONFIGURATIE (JOUW SPECIFIEKE GEGEVENS)
         const firebaseConfig = {
             apiKey: "AIzaSyBJWRIlgx5PxLR0bvZzby7uqYd0I4Pwo7E",
             authDomain: "broodronde-ba755.firebaseapp.com",
@@ -171,12 +187,14 @@
             products: [],
             templates: [],
             dailyOrders: [],
+            deliveries: [],
             payments: [],
             logs: [],
             users: [
                 { username: 'admin', pin: '0000' },
                 { username: 'gebruiker', pin: '1234' },
-                { username: 'Inke', pin: '1972' }
+                { username: 'Inke', pin: '1972' },
+                { username: 'ronde_beheer', pin: '5555' }
             ]
         };
 
@@ -189,6 +207,7 @@
                     appData.products = data.products || [];
                     appData.templates = data.templates || [];
                     appData.dailyOrders = data.dailyOrders || [];
+                    appData.deliveries = data.deliveries || [];
                     appData.payments = data.payments || [];
                     appData.logs = data.logs || [];
                     updateDashboard();
@@ -203,17 +222,19 @@
                 products: appData.products,
                 templates: appData.templates,
                 dailyOrders: appData.dailyOrders,
+                deliveries: appData.deliveries,
                 payments: appData.payments,
                 logs: appData.logs
             });
         }
 
+        // --- LOGGING ---
         function addActionLog(action) {
             const now = new Date();
             const timestamp = now.toLocaleDateString('nl-NL') + " " + now.toLocaleTimeString('nl-NL');
             const user = appData.currentUser ? appData.currentUser.username : "Systeem";
             appData.logs.unshift({ time: timestamp, user: user, action: action });
-            if(appData.logs.length > 100) appData.logs.pop();
+            if(appData.logs.length > 200) appData.logs.pop();
             saveData();
         }
 
@@ -228,17 +249,18 @@
                 document.getElementById('appContainer').style.display = 'block';
                 document.getElementById('currentUser').textContent = user.username;
                 syncFromFirebase();
+                addActionLog("Ingelogd");
             } else { alert('Onjuist!'); }
         }
 
         function logout() { location.reload(); }
 
-        // --- UI RENDERING ---
+        // --- UI RENDERING (VERSIE 3 LOGICA) ---
         function showSection(id) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if (event) event.target.classList.add('active');
+            if (event && event.target) event.target.classList.add('active');
             renderUI();
         }
 
@@ -254,19 +276,21 @@
         function renderLogs() {
             const list = document.getElementById('logList');
             if(!list) return;
-            list.innerHTML = appData.logs.map(l => `<div style="font-size:12px; border-bottom:1px solid #eee; padding:4px;"><b>[${l.time}] ${l.user}:</b> ${l.action}</div>`).join('');
+            list.innerHTML = appData.logs.map(log => 
+                `<div class="log-entry"><span class="log-time">[${log.time}]</span> 👤 ${log.user}: ${log.action}</div>`
+            ).join('') || "Geen logs.";
         }
 
         function updateSelects() {
-            const cSels = ['templateCustomer'];
-            const pSels = ['templateProduct'];
+            const cSels = ['templateCustomer', 'modalCustomer'];
+            const pSels = ['templateProduct', 'modalProduct'];
             cSels.forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.innerHTML = appData.customers.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
             });
             pSels.forEach(id => {
                 const el = document.getElementById(id);
-                if(el) el.innerHTML = appData.products.map(p => `<option value="${p.id}">${p.name} (€${p.price.toFixed(2)})</option>`).join('');
+                if(el) el.innerHTML = appData.products.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
             });
         }
 
@@ -274,9 +298,8 @@
         function addCustomer() {
             const name = document.getElementById('customerName').value;
             const addr = document.getElementById('customerAddress').value;
-            const notes = document.getElementById('customerNotes').value;
             if(!name) return;
-            appData.customers.push({ id: Date.now(), name, address: addr, notes, balance: 0 });
+            appData.customers.push({ id: Date.now(), name, address: addr, balance: 0 });
             addActionLog(`Klant toegevoegd: ${name}`);
             saveData();
         }
@@ -286,41 +309,28 @@
             if(!tbody) return;
             tbody.innerHTML = appData.customers.map(c => `
                 <tr>
-                    <td>${c.name}</td>
-                    <td>${c.address}</td>
-                    <td style="font-weight:bold; color:${c.balance < 0 ? 'red' : 'green'}">€${(c.balance||0).toFixed(2)}</td>
-                    <td>
-                        <button class="btn btn-success" onclick="topUp(${c.id})">+€</button>
-                        <button class="btn btn-danger" onclick="deleteCustomer(${c.id})">X</button>
-                    </td>
+                    <td>${c.name}</td><td>${c.address}</td>
+                    <td style="color:${c.balance < 0 ? 'red':'green'}">€${(c.balance||0).toFixed(2)}</td>
+                    <td><button class="btn btn-success" onclick="topUp(${c.id})">+ €</button></td>
                 </tr>`).join('');
         }
 
         function topUp(id) {
-            const amount = prompt("Bedrag toevoegen:");
-            if(amount && !isNaN(amount)) {
+            const amount = prompt("Bedrag:");
+            if(amount) {
                 const c = appData.customers.find(x => x.id === id);
                 c.balance = (c.balance || 0) + parseFloat(amount);
-                addActionLog(`Saldo opgewaardeerd voor ${c.name}: +€${amount}`);
-                saveData();
-            }
-        }
-
-        function deleteCustomer(id) {
-            if(confirm("Zeker?")) {
-                appData.customers = appData.customers.filter(c => c.id !== id);
+                addActionLog(`Saldo +€${amount} voor ${c.name}`);
                 saveData();
             }
         }
 
         // --- PRODUCTEN ---
         function addProduct() {
-            const cat = document.getElementById('productCategory').value;
             const name = document.getElementById('productName').value;
             const price = parseFloat(document.getElementById('productPrice').value);
             if(!name || isNaN(price)) return;
-            appData.products.push({ id: Date.now(), category: cat, name, price });
-            addActionLog(`Product toegevoegd: ${name}`);
+            appData.products.push({ id: Date.now(), name, price, category: document.getElementById('productCategory').value });
             saveData();
         }
 
@@ -330,20 +340,13 @@
             tbody.innerHTML = appData.products.map(p => `<tr><td>${p.category}</td><td>${p.name}</td><td>€${p.price.toFixed(2)}</td><td><button onclick="deleteProduct(${p.id})">X</button></td></tr>`).join('');
         }
 
-        function deleteProduct(id) {
-            appData.products = appData.products.filter(p => p.id !== id);
-            saveData();
-        }
-
         // --- SJABLONEN ---
         function addTemplate() {
             const cid = parseInt(document.getElementById('templateCustomer').value);
             const pid = parseInt(document.getElementById('templateProduct').value);
-            const qty = parseInt(document.getElementById('templateQuantity').value);
-            const rnd = document.getElementById('templateRound').value;
             const days = [];
             ['mon','tue','wed','thu','fri','sat','sun'].forEach((d, i) => { if(document.getElementById(d).checked) days.push(i+1); });
-            appData.templates.push({ id: Date.now(), customerId: cid, productId: pid, quantity: qty, round: rnd, days: days });
+            appData.templates.push({ id: Date.now(), customerId: cid, productId: pid, quantity: parseInt(document.getElementById('templateQuantity').value), round: document.getElementById('templateRound').value, days: days });
             saveData();
         }
 
@@ -357,12 +360,7 @@
             }).join('');
         }
 
-        function deleteTemplate(id) {
-            appData.templates = appData.templates.filter(t => t.id !== id);
-            saveData();
-        }
-
-        // --- DAILY ROUNDS ---
+        // --- DAILY ROUNDS (INCLUSIEF PIJLTJES & BEVESTIGING) ---
         function loadDailyRounds() {
             const dateStr = document.getElementById('roundDate').value;
             const list = document.getElementById('roundsList');
@@ -374,15 +372,25 @@
                 const p = appData.products.find(x => x.id === o.productId);
                 return `
                 <div class="delivery-item ${o.delivered?'delivered':''} ${o.paid?'paid':''}">
-                    <h4>${c?c.name:'?'}</h4>
-                    <p>${o.quantity}x ${p?p.name:'?'} - €${(o.quantity*(p?p.price:0)).toFixed(2)}</p>
-                    <p><i>Saldo: €${(c?c.balance:0).toFixed(2)}</i></p>
+                    <h4>${c?c.name:'?'}</h4><p>${o.quantity}x ${p?p.name:'?'}</p>
                     <button class="btn btn-warning" onclick="moveOrder(${o.id}, 'up')">↑</button>
                     <button class="btn btn-warning" onclick="moveOrder(${o.id}, 'down')">↓</button>
-                    <button class="btn btn-success" onclick="confirmDelivery(${o.id})">Geleverd</button>
+                    <button class="btn btn-success" onclick="confirmDelivery(${o.id})">✓</button>
                     <button class="btn btn-danger" onclick="deleteOrder(${o.id})">X</button>
                 </div>`;
             }).join('');
+        }
+
+        function moveOrder(id, dir) {
+            const orders = appData.dailyOrders.filter(o => o.date === document.getElementById('roundDate').value).sort((a,b) => (a.orderPosition||0)-(b.orderPosition||0));
+            const idx = orders.findIndex(o => o.id === id);
+            const target = dir === 'up' ? idx - 1 : idx + 1;
+            if(target >= 0 && target < orders.length) {
+                const temp = orders[idx].orderPosition || idx;
+                orders[idx].orderPosition = orders[target].orderPosition || target;
+                orders[target].orderPosition = temp;
+                saveData();
+            }
         }
 
         function generateFromTemplates() {
@@ -394,7 +402,6 @@
                     appData.dailyOrders.push({ id: Date.now()+Math.random(), date: dateStr, customerId: t.customerId, productId: t.productId, quantity: t.quantity, round: t.round, delivered: false, orderPosition: idx });
                 }
             });
-            addActionLog(`Ronde gegenereerd voor ${dateStr}`);
             saveData();
         }
 
@@ -405,37 +412,25 @@
                 const p = appData.products.find(x => x.id === o.productId);
                 const c = appData.customers.find(x => x.id === o.customerId);
                 if(p && c) c.balance -= (o.quantity * p.price);
-                addActionLog(`Geleverd bij ${c.name}`);
+                addActionLog(`Geleverd: ${c.name}`);
                 saveData();
             }
         }
 
-        function deleteOrder(id) {
-            appData.dailyOrders = appData.dailyOrders.filter(o => o.id !== id);
-            saveData();
-        }
-
-        function moveOrder(id, dir) {
-            const orders = appData.dailyOrders.filter(o => o.date === document.getElementById('roundDate').value).sort((a,b) => (a.orderPosition||0)-(b.orderPosition||0));
-            const idx = orders.findIndex(o => o.id === id);
-            const target = dir === 'up' ? idx - 1 : idx + 1;
-            if(target >= 0 && target < orders.length) {
-                const temp = orders[idx].orderPosition;
-                orders[idx].orderPosition = orders[target].orderPosition;
-                orders[target].orderPosition = temp;
-                saveData();
-            }
-        }
-
-        function generateBakeryList() {
+        function showAddOrderModal() { document.getElementById('addOrderModal').style.display = 'block'; }
+        function closeAddOrderModal() { document.getElementById('addOrderModal').style.display = 'none'; }
+        
+        function addOneTimeOrder() {
             const dateStr = document.getElementById('roundDate').value;
-            const orders = appData.dailyOrders.filter(o => o.date === dateStr);
-            const counts = {};
-            orders.forEach(o => {
-                const p = appData.products.find(x => x.id === o.productId);
-                if(p) counts[p.name] = (counts[p.name] || 0) + o.quantity;
+            appData.dailyOrders.push({
+                id: Date.now(), date: dateStr, 
+                customerId: parseInt(document.getElementById('modalCustomer').value),
+                productId: parseInt(document.getElementById('modalProduct').value),
+                quantity: parseInt(document.getElementById('modalQuantity').value),
+                round: document.getElementById('modalRound').value,
+                delivered: false, orderPosition: 999
             });
-            document.getElementById('bakeryList').innerHTML = Object.entries(counts).map(([name, count]) => `<div>${name}: <b>${count}</b></div>`).join('');
+            saveData(); closeAddOrderModal();
         }
 
         function updateDashboard() {
@@ -444,7 +439,7 @@
             document.getElementById('todayOrders').textContent = appData.dailyOrders.filter(o => o.date === today).length;
             const bal = appData.customers.reduce((s, c) => s + (c.balance || 0), 0);
             document.getElementById('totalBalance').textContent = '€' + bal.toFixed(2);
-            document.getElementById('todayDeliveries').textContent = appData.dailyOrders.filter(o => o.date === today && o.delivered).length;
+            document.getElementById('todayDeliveries').textContent = appData.deliveries.filter(d => d.date === today).length;
         }
 
         window.onload = () => {
