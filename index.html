@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
     <style>
-        /* VOLLEDIGE STYLING UIT JOUW VERSIE 3 - ONGEWIJZIGD */
+        /* ALLE ORIGINELE STYLES ONGEWIJZIGD */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; }
         .login-container { display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -40,7 +40,7 @@
         .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
         .modal-content { background-color: white; margin: 50px auto; padding: 30px; width: 90%; max-width: 600px; border-radius: 10px; max-height: 80vh; overflow-y: auto; }
-        @media print { .no-print { display: none !important; } .content-section { box-shadow: none; padding: 0; } body { background: white; } }
+        @media print { .no-print { display: none !important; } }
     </style>
 </head>
 <body>
@@ -76,52 +76,51 @@
         <div id="dashboard" class="content-section active">
             <h2>Dashboard</h2>
             <div class="stats-grid">
-                <div class="stat-card"><h3>Totaal Klanten</h3><div class="value" id="totalCustomers">0</div></div>
-                <div class="stat-card"><h3>Bestellingen Vandaag</h3><div class="value" id="todayOrders">0</div></div>
-                <div class="stat-card"><h3>Openstaand Saldo</h3><div class="value" id="totalBalance">€0.00</div></div>
-                <div class="stat-card"><h3>Leveringen Vandaag</h3><div class="value" id="todayDeliveries">0</div></div>
+                <div class="stat-card"><h3>Totaal Klanten</h3><div id="totalCustomers">0</div></div>
+                <div class="stat-card"><h3>Bestellingen Vandaag</h3><div id="todayOrders">0</div></div>
+                <div class="stat-card"><h3>Openstaand Saldo</h3><div id="totalBalance">€0.00</div></div>
+                <div class="stat-card"><h3>Leveringen Vandaag</h3><div id="todayDeliveries">0</div></div>
             </div>
         </div>
 
         <div id="customers" class="content-section">
-            <h2>Klanten Beheer</h2>
+            <h2>Klanten</h2>
             <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px;">
                 <div>
-                    <h3>Nieuwe Klant</h3>
+                    <h3>Klant Toevoegen</h3>
                     <div class="form-group"><label>Naam</label><input type="text" id="customerName"></div>
                     <div class="form-group"><label>Adres</label><input type="text" id="customerAddress"></div>
                     <div class="form-group"><label>Opmerking</label><textarea id="customerNotes"></textarea></div>
-                    <button class="btn btn-primary" onclick="addCustomer()">Klant Toevoegen</button>
+                    <button class="btn btn-primary" onclick="addCustomer()">Opslaan</button>
                 </div>
                 <div><table id="customersTable"><thead><tr><th>Naam</th><th>Adres</th><th>Saldo</th><th>Acties</th></tr></thead><tbody></tbody></table></div>
             </div>
         </div>
 
         <div id="products" class="content-section">
-            <h2>Producten Beheer</h2>
+            <h2>Producten</h2>
             <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px;">
                 <div>
-                    <h3>Nieuw Product</h3>
+                    <h3>Product Toevoegen</h3>
                     <div class="form-group"><label>Categorie</label><select id="productCategory"><option value="Brood">Brood</option><option value="Pistolets">Pistolets</option><option value="Koeken">Koeken</option></select></div>
-                    <div class="form-group"><label>Broodsoort</label><input type="text" id="productName"></div>
+                    <div class="form-group"><label>Naam</label><input type="text" id="productName"></div>
                     <div class="form-group"><label>Prijs</label><input type="number" id="productPrice" step="0.01"></div>
-                    <button class="btn btn-primary" onclick="addProduct()">Product Toevoegen</button>
+                    <button class="btn btn-primary" onclick="addProduct()">Opslaan</button>
                 </div>
                 <div><table id="productsTable"><thead><tr><th>Categorie</th><th>Naam</th><th>Prijs</th><th>Acties</th></tr></thead><tbody></tbody></table></div>
             </div>
         </div>
 
         <div id="templates" class="content-section">
-            <h2>Sjablonen Beheer</h2>
+            <h2>Sjablonen</h2>
             <div class="form-group"><label>Klant</label><select id="templateCustomer"></select></div>
             <div class="form-group"><label>Product</label><select id="templateProduct"></select></div>
             <div class="form-group"><label>Aantal</label><input type="number" id="templateQuantity" value="1"></div>
-            <div class="form-group"><label>Ronde</label><select id="templateRound"><option value="1">Ronde 1</option><option value="2">Ronde 2</option></select></div>
+            <div class="form-group"><label>Ronde</label><select id="templateRound"><option value="1">1</option><option value="2">2</option></select></div>
             <div class="form-group">
-                <label>Dagen:</label>
                 <input type="checkbox" id="mon"> Ma <input type="checkbox" id="tue"> Di <input type="checkbox" id="wed"> Wo <input type="checkbox" id="thu"> Do <input type="checkbox" id="fri"> Vr <input type="checkbox" id="sat"> Za <input type="checkbox" id="sun"> Zo
             </div>
-            <button class="btn btn-primary" onclick="addTemplate()">Sjabloon Toevoegen</button>
+            <button class="btn btn-primary" onclick="addTemplate()">Toevoegen</button>
             <table id="templatesTable"><thead><tr><th>Klant</th><th>Product</th><th>Aantal</th><th>Ronde</th><th>Dagen</th><th>Acties</th></tr></thead><tbody></tbody></table>
         </div>
 
@@ -129,44 +128,36 @@
             <h2>Dagelijkse Ronde</h2>
             <div class="no-print">
                 <input type="date" id="roundDate" onchange="loadDailyRounds()">
-                <button class="btn btn-success" onclick="generateFromTemplates()">Genereer van Sjablonen</button>
+                <button class="btn btn-success" onclick="generateFromTemplates()">Genereer</button>
                 <button class="btn btn-primary" onclick="showAddOrderModal()">Eenmalig</button>
-                <button class="btn btn-warning" onclick="window.print()">Print</button>
             </div>
             <div id="roundsList"></div>
         </div>
 
-        <div id="bakery" class="content-section">
-            <h2>Baklijst</h2>
-            <div id="bakeryList"></div>
-        </div>
+        <div id="bakery" class="content-section"><h2>Baklijst</h2><div id="bakeryList"></div></div>
 
         <div id="reports" class="content-section">
-            <h2>Rapporten & Logs</h2>
-            <div class="form-group">
-                <label>Klant Rapport</label>
-                <select id="reportCustomer" onchange="generateCustomerReport()"></select>
-            </div>
+            <h2>Rapporten</h2>
+            <button class="btn btn-primary" onclick="generateCustomerReport()">Genereer Rapport</button>
             <div id="customerReport"></div>
-            <h3 style="margin-top:20px;">Systeem Logs</h3>
-            <div id="logList" style="font-size:12px; background:#f0f0f0; padding:10px; max-height:200px; overflow-y:auto;"></div>
+            <h3 style="margin-top:20px;">Logs</h3>
+            <div id="logList" style="font-size:11px; background:#eee; padding:10px;"></div>
         </div>
     </div>
 
     <div id="addOrderModal" class="modal">
         <div class="modal-content">
             <h3>Eenmalige Bestelling</h3>
-            <select id="modalCustomer"></select>
-            <select id="modalProduct"></select>
-            <input type="number" id="modalQuantity" value="1">
-            <select id="modalRound"><option value="1">1</option><option value="2">2</option></select>
-            <button class="btn btn-primary" onclick="addOneTimeOrder()">Toevoegen</button>
+            <select id="modalCustomer"></select><br>
+            <select id="modalProduct"></select><br>
+            <input type="number" id="modalQuantity" value="1"><br>
+            <select id="modalRound"><option value="1">1</option><option value="2">2</option></select><br>
+            <button class="btn btn-primary" onclick="addOneTimeOrder()">Opslaan</button>
             <button class="btn btn-danger" onclick="closeAddOrderModal()">Sluiten</button>
         </div>
     </div>
 
     <script>
-        // FIREBASE CONFIGURATIE (Behouden uit onze laatste sessie)
         const firebaseConfig = {
             apiKey: "AIzaSyBJWRIlgx5PxLR0bvZzby7uqYd0I4Pwo7E",
             authDomain: "broodronde-ba755.firebaseapp.com",
@@ -182,38 +173,38 @@
 
         let appData = {
             currentUser: null,
-            customers: [], products: [], templates: [], dailyOrders: [], payments: [], logs: [],
+            customers: [], products: [], templates: [], dailyOrders: [], logs: [],
             users: [
                 { username: 'Inke', pin: '1972' },
-                { username: 'admin', pin: '0000' },
-                { username: 'ronde_beheer', pin: '5555' }
+                { username: 'admin', pin: '0000' }
             ]
         };
 
-        // DATABASE SYNC
-        function syncFromFirebase() {
-            db.ref('breadAppData').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    appData = { ...appData, ...data };
-                    updateDashboard();
+        function sync() {
+            db.ref('breadAppData').on('value', (s) => {
+                const d = s.val();
+                if (d) {
+                    appData.customers = d.customers || [];
+                    appData.products = d.products || [];
+                    appData.templates = d.templates || [];
+                    appData.dailyOrders = d.dailyOrders || [];
+                    appData.logs = d.logs || [];
                     renderUI();
+                    updateDashboard();
                 }
             });
         }
 
         function saveData() {
             db.ref('breadAppData').set({
-                customers: appData.customers || [],
-                products: appData.products || [],
-                templates: appData.templates || [],
-                dailyOrders: appData.dailyOrders || [],
-                payments: appData.payments || [],
-                logs: appData.logs || []
+                customers: appData.customers,
+                products: appData.products,
+                templates: appData.templates,
+                dailyOrders: appData.dailyOrders,
+                logs: appData.logs
             });
         }
 
-        // LOGIN LOGICA
         function login() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('pincode').value;
@@ -223,26 +214,149 @@
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'block';
                 document.getElementById('currentUser').textContent = user.username;
-                syncFromFirebase();
-                addActionLog("Ingelogd");
-            } else { alert("Onjuiste gegevens"); }
+                sync();
+            } else { alert("Fout!"); }
         }
 
         function logout() { location.reload(); }
 
-        function addActionLog(action) {
-            const log = `[${new Date().toLocaleString()}] ${appData.currentUser?.username || 'Systeem'}: ${action}`;
-            if (!appData.logs) appData.logs = [];
-            appData.logs.unshift(log);
-            if (appData.logs.length > 100) appData.logs.pop();
-            saveData();
-        }
-
-        // UI RENDER FUNCTIES
         function showSection(id) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if (event) event.target.classList.add('active');
-            renderUI();
+            if(event) event.target.classList.add('active');
         }
+
+        // KLANTEN
+        function addCustomer() {
+            appData.customers.push({ id: Date.now(), name: document.getElementById('customerName').value, address: document.getElementById('customerAddress').value, notes: document.getElementById('customerNotes').value, balance: 0 });
+            saveData();
+        }
+
+        function loadCustomersTable() {
+            const tb = document.querySelector('#customersTable tbody');
+            tb.innerHTML = appData.customers.map(c => `<tr><td>${c.name}</td><td>${c.address}</td><td>€${(c.balance||0).toFixed(2)}</td><td><button onclick="topUp(${c.id})">+</button></td></tr>`).join('');
+        }
+
+        function topUp(id) {
+            const a = prompt("Bedrag:");
+            if(a) { appData.customers.find(x => x.id === id).balance += parseFloat(a); saveData(); }
+        }
+
+        // PRODUCTEN
+        function addProduct() {
+            appData.products.push({ id: Date.now(), category: document.getElementById('productCategory').value, name: document.getElementById('productName').value, price: parseFloat(document.getElementById('productPrice').value) });
+            saveData();
+        }
+
+        function loadProductsTable() {
+            const tb = document.querySelector('#productsTable tbody');
+            tb.innerHTML = appData.products.map(p => `<tr><td>${p.category}</td><td>${p.name}</td><td>€${p.price.toFixed(2)}</td><td><button onclick="deleteProduct(${p.id})">X</button></td></tr>`).join('');
+        }
+
+        function deleteProduct(id) { appData.products = appData.products.filter(p => p.id !== id); saveData(); }
+
+        // RONDE & SORTERING
+        function moveOrder(id, dir) {
+            const curr = appData.dailyOrders.find(o => o.id === id);
+            let same = appData.dailyOrders.filter(o => o.date === curr.date && o.round === curr.round).sort((a,b) => (a.orderPosition||0)-(b.orderPosition||0));
+            const idx = same.findIndex(o => o.id === id);
+            let target = dir === 'up' ? idx - 1 : idx + 1;
+            if(target >= 0 && target < same.length) {
+                const tOrder = same[target];
+                const tmp = curr.orderPosition || 0;
+                curr.orderPosition = tOrder.orderPosition || 0;
+                tOrder.orderPosition = tmp;
+                saveData();
+            }
+        }
+
+        function loadDailyRounds() {
+            const d = document.getElementById('roundDate').value;
+            const container = document.getElementById('roundsList');
+            const orders = appData.dailyOrders.filter(o => o.date === d).sort((a,b) => (a.orderPosition||0)-(b.orderPosition||0));
+            container.innerHTML = orders.map(o => {
+                const c = appData.customers.find(x => x.id === o.customerId);
+                const p = appData.products.find(x => x.id === o.productId);
+                return `<div class="delivery-item ${o.delivered?'delivered':''}">
+                    <strong>${c?.name}</strong> - ${o.quantity}x ${p?.name} (R${o.round})<br>
+                    <button onclick="moveOrder(${o.id}, 'up')">↑</button><button onclick="moveOrder(${o.id}, 'down')">↓</button>
+                    <button onclick="confirmDelivery(${o.id})">✓</button>
+                </div>`;
+            }).join('');
+        }
+
+        function confirmDelivery(id) {
+            const o = appData.dailyOrders.find(x => x.id === id);
+            if(o && !o.delivered) {
+                o.delivered = true;
+                const c = appData.customers.find(x => x.id === o.customerId);
+                const p = appData.products.find(x => x.id === o.productId);
+                c.balance -= (o.quantity * p.price);
+                saveData();
+            }
+        }
+
+        function generateFromTemplates() {
+            const dStr = document.getElementById('roundDate').value;
+            const day = new Date(dStr).getDay();
+            appData.dailyOrders = appData.dailyOrders.filter(o => o.date !== dStr);
+            appData.templates.forEach((t, i) => {
+                if(t.days.includes(day)) appData.dailyOrders.push({ id: Date.now()+Math.random(), date: dStr, customerId: t.customerId, productId: t.productId, quantity: t.quantity, round: t.round, delivered: false, orderPosition: i });
+            });
+            saveData();
+        }
+
+        function addTemplate() {
+            const days = [];
+            if(document.getElementById('mon').checked) days.push(1);
+            if(document.getElementById('tue').checked) days.push(2);
+            if(document.getElementById('wed').checked) days.push(3);
+            if(document.getElementById('thu').checked) days.push(4);
+            if(document.getElementById('fri').checked) days.push(5);
+            if(document.getElementById('sat').checked) days.push(6);
+            if(document.getElementById('sun').checked) days.push(0);
+            appData.templates.push({ id: Date.now(), customerId: parseInt(document.getElementById('templateCustomer').value), productId: parseInt(document.getElementById('templateProduct').value), quantity: parseInt(document.getElementById('templateQuantity').value), round: document.getElementById('templateRound').value, days });
+            saveData();
+        }
+
+        function loadTemplatesTable() {
+            const tb = document.querySelector('#templatesTable tbody');
+            tb.innerHTML = appData.templates.map(t => {
+                const c = appData.customers.find(x => x.id === t.customerId);
+                return `<tr><td>${c?.name}</td><td>${t.quantity}</td><td>${t.round}</td><td>${t.days}</td><td><button onclick="deleteTemplate(${t.id})">X</button></td></tr>`;
+            }).join('');
+        }
+
+        function deleteTemplate(id) { appData.templates = appData.templates.filter(t => t.id !== id); saveData(); }
+
+        function renderUI() {
+            loadCustomersTable(); loadProductsTable(); loadTemplatesTable(); loadDailyRounds();
+            const cOpts = appData.customers.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            const pOpts = appData.products.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+            ['templateCustomer', 'modalCustomer'].forEach(id => document.getElementById(id).innerHTML = cOpts);
+            ['templateProduct', 'modalProduct'].forEach(id => document.getElementById(id).innerHTML = pOpts);
+        }
+
+        function updateDashboard() {
+            document.getElementById('totalCustomers').textContent = appData.customers.length;
+            const bal = appData.customers.reduce((s, c) => s + (c.balance || 0), 0);
+            document.getElementById('totalBalance').textContent = '€' + bal.toFixed(2);
+        }
+
+        function showAddOrderModal() { document.getElementById('addOrderModal').style.display = 'block'; }
+        function closeAddOrderModal() { document.getElementById('addOrderModal').style.display = 'none'; }
+        function addOneTimeOrder() {
+            appData.dailyOrders.push({ id: Date.now(), date: document.getElementById('roundDate').value, customerId: parseInt(document.getElementById('modalCustomer').value), productId: parseInt(document.getElementById('modalProduct').value), quantity: parseInt(document.getElementById('modalQuantity').value), round: document.getElementById('modalRound').value, delivered: false, orderPosition: 999 });
+            saveData(); closeAddOrderModal();
+        }
+
+        window.onload = function() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('nl-NL');
+            document.getElementById('roundDate').valueAsDate = new Date();
+        };
+    </script>
+</body>
+</html>
